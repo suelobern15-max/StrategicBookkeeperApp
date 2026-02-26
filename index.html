@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strategic Bookkeeping Feasibility Study Simulator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>Strategic Bookkeeping Feasibility Study Simulator</h1>
+      <p class="subtitle">eCommerce Brand • Shopify (primary) • PayPal & Stripe payouts • Jan–Mar 2026</p>
+    </div>
+    <div class="flow-chip">Transactions → Reports → Feasibility → Decision</div>
+  </header>
+
+  <main class="grid-layout">
+    <section class="card">
+      <div class="section-title-row">
+        <h2>1) Scenario Overview</h2>
+        <label for="month-selector">Timeline:</label>
+        <select id="month-selector" aria-label="Select timeline month"></select>
+      </div>
+      <p class="decision-question"><strong>Decision:</strong> Is it financially feasible to increase marketing spend by 30% next month to accelerate growth?</p>
+      <div id="summary-cards" class="summary-cards"></div>
+      <h3>Current Red Flags</h3>
+      <ul id="red-flags" class="red-flags"></ul>
+    </section>
+
+    <section class="card">
+      <h2>2) Transactions & Ledger View</h2>
+      <div class="transaction-controls">
+        <input id="transaction-search" type="text" placeholder="Search description or account" aria-label="Search transactions" />
+        <select id="type-filter" aria-label="Filter by type">
+          <option value="all">All types</option>
+          <option value="Revenue">Revenue</option>
+          <option value="Expense">Expense</option>
+          <option value="Refund">Refund</option>
+          <option value="Inventory">Inventory</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Why this transaction matters</th>
+              <th>Journal entry drill-down</th>
+            </tr>
+          </thead>
+          <tbody id="transaction-table-body"></tbody>
+        </table>
+      </div>
+      <h3>Ledger Balances by Account</h3>
+      <div class="ledger-grid" id="ledger-grid"></div>
+    </section>
+
+    <section class="card wide">
+      <h2>3) Financial Reports View</h2>
+      <div class="reports-grid">
+        <article>
+          <h3>Profit & Loss (monthly)</h3>
+          <table class="report-table" id="pl-table"></table>
+        </article>
+        <article>
+          <h3>Balance Sheet</h3>
+          <table class="report-table" id="bs-table"></table>
+        </article>
+        <article>
+          <h3>Cash Flow Statement</h3>
+          <table class="report-table" id="cf-table"></table>
+        </article>
+      </div>
+      <h3>KPI Panel</h3>
+      <div class="kpi-grid" id="kpi-grid"></div>
+    </section>
+
+    <section class="card">
+      <h2>4) Feasibility Analysis Panel</h2>
+      <p id="analysis-question"></p>
+      <div class="slider-grid">
+        <label>Ad spend increase %
+          <input id="ad-spend-slider" type="range" min="0" max="60" value="30" step="1" />
+          <span id="ad-spend-value">30%</span>
+        </label>
+        <label>Revenue lift %
+          <input id="revenue-lift-slider" type="range" min="0" max="40" value="15" step="1" />
+          <span id="revenue-lift-value">15%</span>
+        </label>
+        <label>Refund rate change %
+          <input id="refund-change-slider" type="range" min="-2" max="4" value="1" step="0.5" />
+          <span id="refund-change-value">+1%</span>
+        </label>
+        <label class="toggle-row">
+          <input id="shock-toggle" type="checkbox" />
+          Enable advanced mode (random shock)
+        </label>
+      </div>
+      <button id="run-simulation" class="primary-btn">Run Feasibility Test</button>
+    </section>
+
+    <section class="card">
+      <h2>5) Simulation Output View</h2>
+      <table class="report-table" id="comparison-table"></table>
+      <p id="shock-note" class="note"></p>
+    </section>
+
+    <section class="card wide">
+      <h2>6) Verdict & Coaching Panel</h2>
+      <div class="verdict-row">
+        <span id="verdict-badge" class="badge">Awaiting simulation</span>
+        <span id="score-chip" class="score-chip">Score: --</span>
+      </div>
+
+      <h3>Learning & Assessment Layer</h3>
+      <div class="assessment-grid">
+        <label>Your feasibility judgment
+          <select id="user-judgment">
+            <option value="">Select your call</option>
+            <option>✅ Feasible</option>
+            <option>⚠️ Feasible with Risk</option>
+            <option>❌ Not Feasible</option>
+          </select>
+        </label>
+        <fieldset>
+          <legend>Financial reasoning used</legend>
+          <label><input type="checkbox" value="cash" class="reason-check" /> Cash flow impact</label>
+          <label><input type="checkbox" value="margin" class="reason-check" /> Margin impact</label>
+          <label><input type="checkbox" value="refund" class="reason-check" /> Refund risk impact</label>
+        </fieldset>
+        <fieldset>
+          <legend>Risk awareness flagged</legend>
+          <label><input type="checkbox" value="runway" class="risk-check" /> Runway threshold</label>
+          <label><input type="checkbox" value="marketing" class="risk-check" /> Marketing % of revenue</label>
+          <label><input type="checkbox" value="refund-limit" class="risk-check" /> Refund > 7%</label>
+        </fieldset>
+      </div>
+
+      <div class="coaching-grid">
+        <article>
+          <h3>Driver → Impact → Action</h3>
+          <ul id="driver-impact-list"></ul>
+        </article>
+        <article>
+          <h3>Coaching insights</h3>
+          <ul id="coaching-list"></ul>
+        </article>
+      </div>
+
+      <label for="reflection" class="reflection-label">Reflection: What metric would you monitor weekly if this decision is approved?</label>
+      <textarea id="reflection" rows="3" placeholder="Type your reflection here..."></textarea>
+      <p class="objective">Success criteria target: “Based on cash flow, margin, and refund risk, this decision is not financially feasible without changes.”</p>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>Advanced mode includes multi-month impact simulation + random shocks + stacked decisions in training runs.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
